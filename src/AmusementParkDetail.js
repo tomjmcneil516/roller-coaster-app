@@ -23,30 +23,28 @@ const RollerCoasterList = ( {match} ) => {
 
     const fetchRollerCoasters = async () => {
         const data = await fetch(API_URL);
-        const rollerCoastersData = await data.json();
-        console.log(rollerCoastersData)
+        const rollerCoasterData = await data.json();
+        console.log(rollerCoasterData)
         setRollerCoasterData(rollerCoasterData);
     }
 
 
-    const getRollerCoasterCard = (rollerCoasterID) => {
+    const getRollerCoasterCard = (rollerCoaster) => {
         return(
-            <Grid item xs={12} sm={4} key={rollerCoasterID}>
+            <Grid item xs={12} sm={4} key={rollerCoaster.rollerCoasterName}>
                 <Card>
-                    <CardActionArea component = {Link} to = {`/roller-coasters/${rollerCoasterData.rollerCoasterName}/${rollerCoasterData.amusementParkName}`}>
+                    <CardActionArea component = {Link} to = {`/roller-coasters/${rollerCoaster.rollerCoasterName}/${rollerCoaster.amusementParkName}`}>
                         <CardMedia
                             style={{ width: "130px", height: "130px"}}
                         />
                         <CardContent>
-                        <Typography>hello</Typography>
+                            <Typography>{rollerCoaster.rollerCoasterName}</Typography>
                         </CardContent>
                     </CardActionArea>
                 </Card>
             </Grid>
         )
     }
-
-
 
     return (
         <>
@@ -55,9 +53,9 @@ const RollerCoasterList = ( {match} ) => {
             </AppBar>
             {rollerCoasterData ? (
             <Grid container spacing={5} className={classes.RollerCoasterContainer}>
-                {Object.keys(rollerCoasterData).map(
-                    (rollerCoasterName) =>
-                    getRollerCoasterCard(rollerCoasterName)
+                {rollerCoasterData.map(
+                    (rollerCoaster) =>
+                    getRollerCoasterCard(rollerCoaster)
             )}
             </Grid>
             ) : (

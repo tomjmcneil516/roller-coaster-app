@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
-import { Autocomplete } from '@material-ui/lab'
-import { TextField } from '@material-ui/core'
 import SearchBar from './SearchBar'
 
 const RollerCoasterList = () => {
