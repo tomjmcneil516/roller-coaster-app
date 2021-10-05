@@ -12,8 +12,7 @@ const useStyles = makeStyles({
 })
 
 
-const RollerCoasterList = ( {match}, props ) => {
-    const {history} = props
+const RollerCoasterList = ( {match} ) => {
     const API_URL = `http://localhost:8080/api/v1/amusement-parks/?amusement-park-name=${match.params.amusementParkName}`
     const classes = useStyles()
     const [rollerCoasterData, setRollerCoasterData] = useState([]);
@@ -24,8 +23,9 @@ const RollerCoasterList = ( {match}, props ) => {
 
     const fetchRollerCoasters = async () => {
         const data = await fetch(API_URL);
-        const response = await data.json();
-        setRollerCoasterData(response);
+        const rollerCoastersData = await data.json();
+        console.log(rollerCoastersData)
+        setRollerCoasterData(rollerCoasterData);
     }
 
 
@@ -38,7 +38,7 @@ const RollerCoasterList = ( {match}, props ) => {
                             style={{ width: "130px", height: "130px"}}
                         />
                         <CardContent>
-                        <Typography>{`${rollerCoasterName}`}</Typography>
+                        <Typography>hello</Typography>
                         </CardContent>
                     </CardActionArea>
                 </Card>
