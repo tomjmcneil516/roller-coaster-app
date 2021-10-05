@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
-import SearchBar from './SearchBar'
 
 const RollerCoasterList = () => {
 
@@ -19,9 +18,6 @@ const RollerCoasterList = () => {
 
     return (
         <div>
-
-            <SearchBar list = { rollerCoasters }/>
-
             {rollerCoasters.map(rollerCoaster => (
             <h1 key={rollerCoaster.amusementParkName + rollerCoaster.rollerCoasterName}>
                 <Link to={`/roller-coasters/${rollerCoaster.rollerCoasterName}/${rollerCoaster.amusementParkName}`}>

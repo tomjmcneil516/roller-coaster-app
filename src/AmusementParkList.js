@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
 import {AppBar, Toolbar, Grid, Card, CircularProgress, CardMedia, CardContent, Typography, CardActionArea} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles({
     AmusementParkContainer: {
@@ -16,6 +17,8 @@ const AmusementParkList = () => {
     const API_URL = "http://localhost:8080/api/v1/amusement-parks"
     const classes = useStyles()
     const [amusementParks, setAmusementParks] = useState([]);
+    
+
 
     useEffect(() => {
         fetchAmusementParks();
