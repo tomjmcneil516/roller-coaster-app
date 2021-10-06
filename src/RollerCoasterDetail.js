@@ -5,7 +5,7 @@ const RollerCoasterDetail = ( {match} ) => {
 
     const [rollerCoaster, setRollerCoaster] = useState({});
 
-    const rollerCoasterRating = () => {
+    const getRollerCoasterRating = () => {
         return rollerCoaster.votes === 0 ? "No Rating" :
         Number(rollerCoaster.score/rollerCoaster.votes).toFixed(2) + " / 5"; 
     }
@@ -40,7 +40,7 @@ const RollerCoasterDetail = ( {match} ) => {
         <div>
             <h1>{rollerCoaster.rollerCoasterName}</h1>
             <h2>{rollerCoaster.amusementParkName}</h2>
-            <h3>{rollerCoasterRating()}</h3>
+            <h3>{getRollerCoasterRating()}</h3>
             <h3>{rollerCoaster.votes + " total votes"}</h3>
 
             <Rating

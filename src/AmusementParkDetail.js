@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
-import {AppBar, Toolbar, Grid, Card, CircularProgress, CardMedia, CardContent, Typography, CardActionArea} from "@material-ui/core";
+import {Box, AppBar, Toolbar, Grid, Card, CircularProgress, CardMedia, CardContent, Typography, CardActionArea} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Rating from '@material-ui/lab/Rating';
 
@@ -54,7 +54,10 @@ const RollerCoasterList = ( {match} ) => {
                         />
                         <CardContent className={classes.cardContent}>
                             <Typography>{rollerCoaster.rollerCoasterName}</Typography>
-                            <Rating value = {Number(getRollerCoasterRating(rollerCoaster))} readOnly precision={0.1}></Rating>
+                            <Box>
+                                <Rating value = {Number(getRollerCoasterRating(rollerCoaster))} readOnly precision={0.1}/>
+                                <Box>{rollerCoaster.votes === 0 ? "No Rating" : Number(getRollerCoasterRating(rollerCoaster)).toFixed(2) + " / 5"}</Box>
+                            </Box>
                             <Typography>{`${rollerCoaster.votes} votes`}</Typography>
                         </CardContent>
                     </CardActionArea>
@@ -69,7 +72,7 @@ const RollerCoasterList = ( {match} ) => {
                 <Toolbar />
             </AppBar>
             {rollerCoasterData ? (
-            <Grid container spacing={5} className={classes.RollerCoasterContainer}>
+            <Grid container spacing={1} className={classes.RollerCoasterContainer}>
                 {rollerCoasterData.map(
                     (rollerCoaster) =>
                     getRollerCoasterCard(rollerCoaster)
