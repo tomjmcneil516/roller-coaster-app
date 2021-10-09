@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
-import {Box, AppBar, Toolbar, Grid, Card, CircularProgress, CardMedia, CardContent, Typography, CardActionArea} from "@material-ui/core";
+import {TextField, Box, AppBar, Toolbar, Grid, Card, CircularProgress, CardMedia, CardContent, Typography, CardActionArea} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Rating from '@material-ui/lab/Rating';
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles({
     RollerCoasterContainer: {
@@ -23,10 +24,15 @@ const RollerCoasterList = ( {match} ) => {
     const API_URL = `http://localhost:8080/api/v1/amusement-parks/?amusement-park-name=${match.params.amusementParkName}`
     const classes = useStyles()
     const [rollerCoasterData, setRollerCoasterData] = useState([]);
+    const [filter, setFilter] = useState("");
 
     const getRollerCoasterRating = (rollerCoaster) => {
         return rollerCoaster.votes === 0 ? 0 :
         rollerCoaster.score/rollerCoaster.votes; 
+    }
+
+    const handleInputChange = (e) => {
+        setFilter(e.target.value);
     }
 
 
@@ -69,14 +75,24 @@ const RollerCoasterList = ( {match} ) => {
     return (
         <>
             <AppBar position="static">
-                <Toolbar />
+                <Toolbar>
+                    <div className = {classes.searchContainer}>
+                        <SearchIcon className = {classes.searchIcon}/>
+                        <TextField 
+                            className = {classes.searchInput}
+                            onChange = {handleInputChange}
+                            label = "Search"
+                        />
+                    </div>
+                </Toolbar>
             </AppBar>
             {rollerCoasterData ? (
             <Grid container spacing={1} className={classes.RollerCoasterContainer}>
                 {rollerCoasterData.map(
                     (rollerCoaster) =>
-                    getRollerCoasterCard(rollerCoaster)
-            )}
+                    rollerCoaster.rollerCoasterName.toLowerCase().includes(filter.toLowerCase()) 
+                    && getRollerCoasterCard(rollerCoaster)
+                )}
             </Grid>
             ) : (
                 <CircularProgress/>

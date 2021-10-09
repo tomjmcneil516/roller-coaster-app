@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
-import {AppBar, Toolbar, Grid, Card, CircularProgress, CardMedia, CardContent, Typography, CardActionArea} from "@material-ui/core";
+import {TextField, Box, AppBar, Toolbar, Grid, Card, CircularProgress, CardMedia, CardContent, Typography, CardActionArea} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import Rating from '@material-ui/lab/Rating';
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles({
     AmusementParkContainer: {
@@ -17,7 +17,7 @@ const AmusementParkList = () => {
     const API_URL = "http://localhost:8080/api/v1/amusement-parks"
     const classes = useStyles()
     const [amusementParks, setAmusementParks] = useState([]);
-    
+    const [filter, setFilter] = useState("");
 
 
     useEffect(() => {
@@ -29,6 +29,10 @@ const AmusementParkList = () => {
         const amusementParks = await data.json();
         console.log(amusementParks);
         setAmusementParks(amusementParks);
+    }
+
+    const handleInputChange = (e) => {
+        setFilter(e.target.value);
     }
 
     const getAmusementParkCard = (AmusementPark) => {
@@ -54,13 +58,23 @@ const AmusementParkList = () => {
     return (
         <>
             <AppBar position="static">
-                <Toolbar />
+            <Toolbar>
+                    <div className = {classes.searchContainer}>
+                        <SearchIcon className = {classes.searchIcon}/>
+                        <TextField 
+                            className = {classes.searchInput}
+                            onChange = {handleInputChange}
+                            label = "Search"
+                        />
+                    </div>
+                </Toolbar>
             </AppBar>
             {amusementParks ? (
             <Grid container spacing={5} className={classes.AmusementParkContainer}>
                 {amusementParks.map(
                     (amusementPark) =>
-                    getAmusementParkCard(amusementPark)
+                    amusementPark.toLowerCase().includes(filter.toLowerCase()) 
+                    && getAmusementParkCard(amusementPark)
             )}
             </Grid>
             ) : (
